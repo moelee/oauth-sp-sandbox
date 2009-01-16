@@ -1,3 +1,5 @@
+require 'mongrel_cluster/recipes'
+
 set :application, "oauth-sp-sandbox"
 set :repository,  "git://github.com/moelee/oauth-sp-sandbox.git"
 set :branch, "master"
@@ -17,6 +19,8 @@ ssh_options[:username] = 'root'
 ssh_options[:host_key] = 'ssh-dss'
 ssh_options[:keys] = '~/.ssh/id_rsa'
 ssh_options[:paranoid] = false
+
+set :mongrel_config, "#{current_path}/config/mongrel_cluster.yml" 
 
 set :use_sudo, false
 
