@@ -1,0 +1,11 @@
+<% if flash[:notice] %>
+<strong><%= flash[:notice] %></strong><br>
+<% end %>
+
+<% if logged_in? %>
+<%= link_to 'Logout', logout_path %>
+<% else %>
+<%= link_to 'Login', login_path %>
+<% end %>
+<br>
+<%= 'Welcome to the Service Provider sample app!' %>
