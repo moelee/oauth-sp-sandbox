@@ -16,7 +16,9 @@ test:
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
-  pool: 5
+  adapter: mysql
+  database: oauth_sp_sandbox
+  socket: /var/lib/mysql/mysql.sock
+  username: root
+  password: bluedevils
   timeout: 5000
