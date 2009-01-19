@@ -25,9 +25,6 @@ set :mongrel_conf, "#{current_path}/config/mongrel_cluster.yml"
 
 set :use_sudo, false
 
-#default_run_options[:pty] = true
-#set :ssh_options, {:forward_agent => true}
-
 role :app, "174.129.246.97"
 role :web, "174.129.246.97"
 role :db,  "174.129.246.97", :primary => true
