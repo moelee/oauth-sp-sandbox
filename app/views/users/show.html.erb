@@ -8,4 +8,6 @@
 <%= link_to 'Login', login_path %>
 <% end %>
 <br>
-<%= 'Welcome to the Service Provider sample app!' %>
+<p><%= 'Welcome to the Service Provider sample app!' %></p>
+<p><%= "Your username is #{@user.login}"%></p>
+<p><%= link_to 'Your Photos', user_photos_path(@user) %>
