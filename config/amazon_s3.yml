@@ -1,14 +1,14 @@
 development:
-  bucket_name: appname_development
-  access_key_id: 
-  secret_access_key: 
+  bucket_name: oauth_sp_sandbox_development
+  access_key_id: 0ZZCDW4D7BFK9X155582
+  secret_access_key: JJC38dfxG5SZhKtSU4sWzSNACrdohNz94zQw0ZtO
 
 test:
-  bucket_name: appname_test
-  access_key_id: 
-  secret_access_key: 
+  bucket_name: oauth_sp_sandbox_test
+  access_key_id: 0ZZCDW4D7BFK9X155582
+  secret_access_key: JJC38dfxG5SZhKtSU4sWzSNACrdohNz94zQw0ZtO
 
 production:
-  bucket_name: appname
-  access_key_id: 
-  secret_access_key: 
+  bucket_name: oauth_sp_sandbox
+  access_key_id: 0ZZCDW4D7BFK9X155582
+  secret_access_key: JJC38dfxG5SZhKtSU4sWzSNACrdohNz94zQw0ZtO
