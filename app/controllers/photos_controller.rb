@@ -1,8 +1,19 @@
 class PhotosController < ApplicationController
+  #before_filter :login_or_oauth_required
+  before_filter :find_user
+  
+protected
+
+  def find_user
+    @user = User.find(params[:user_id]) if params[:user_id]
+  end
+  
+public
+  
   # GET /photos
   # GET /photos.xml
   def index
-    @photos = Photo.find(:all)
+    @photos = Photo.find(:all) or (!@user.nil? and @user.photos)
 
     respond_to do |format|
       format.html # index.html.erb
