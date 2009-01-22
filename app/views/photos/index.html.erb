@@ -20,9 +20,9 @@
     <td><%=h photo.size %></td>
     <td><%=h photo.width %></td>
     <td><%=h photo.height %></td>
-    <td><%= link_to 'Show', photo %></td>
-    <td><%= link_to 'Edit', edit_photo_path(photo) %></td>
-    <td><%= link_to 'Destroy', photo, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Show', user_photo_path(@user, photo) %></td>
+    <td><%= link_to 'Edit', edit_user_photo_path(@user, photo) %></td>
+    <td><%= link_to 'Destroy', user_photo_path(@user, photo), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
