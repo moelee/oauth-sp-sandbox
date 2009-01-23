@@ -1,5 +1,5 @@
 class PhotosController < ApplicationController
-  #before_filter :login_or_oauth_required
+  before_filter :login_or_oauth_required
   before_filter :find_user
   
 protected
