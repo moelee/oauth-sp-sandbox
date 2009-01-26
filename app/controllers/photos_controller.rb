@@ -17,7 +17,7 @@ public
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @photos }
+      format.xml  { render :xml => @photos.to_xml(:methods => Photo::DEFAULT_RETURN_METHODS) }
     end
   end
 
