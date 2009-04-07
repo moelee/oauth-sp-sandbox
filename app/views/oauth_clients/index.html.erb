@@ -13,8 +13,19 @@
 	<p>
 		You have the following client applications registered:
 	</p>
-	<% @client_applications.each do |client| %>
-		<p><%= link_to client.name, oauth_client_path(client.id) %></p>
-	<% end %>
+	<table>
+		<tr>
+			<th>App Name</th>
+			<th>Created At</th>
+			<th>Actions</th>s
+		</tr>
+		<% @client_applications.each do |client| %>
+			<tr>
+				<td><%= link_to client.name, oauth_client_path(client.id) %></td>
+				<td><%= client.created_at %>
+				<td><%= link_to 'Delete', oauth_client_path(client), :method => :delete %>
+			</tr>
+		<% end %>
+	</table>
 <% end %>
 <h3><%= link_to "Register your application", :action=> :new %></h3>
