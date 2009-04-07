@@ -18,7 +18,13 @@ class OauthToken < ActiveRecord::Base
   end
   
   def to_query
-    "oauth_token=#{token}&oauth_token_secret=#{secret}"
+    resource_names = ""
+    resource_urls = ""
+    self.client_application.resources.each do |r|
+      resource_names += "&resources[]=" + r.name
+      resource_urls += "&resource_urls[]=" + r.base_url
+    end
+    "oauth_token=#{token}&oauth_token_secret=#{secret}#{resource_names}#{resource_urls}&expires_on=#{expires_on}"
   end
     
   protected
