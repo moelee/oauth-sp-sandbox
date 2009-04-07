@@ -2,21 +2,19 @@
 <h1>OAuth Client Applications</h1>
 
 <h3>Application Developers</h3>
-<%if @client_applications.empty?%>
+<% if @client_applications.empty? %>
 	<p>
 		Do you have an application you would like to register for use with us using the <a href="http://oauth.net">OAuth</a> standard?
 	</p>
 	<p>
 		You must register your web application before it can make OAuth requests to this service
 	</p>
-<%else%>
+<% else %>
 	<p>
 		You have the following client applications registered:
 	</p>
-	<%@client_applications.each do |client|%>
-		<%div_for client do%>
-			<%=link_to client.name,:action=>:show,:id=>client.id%>
-		<%end%>
-	<%end%>
-<%end%>
-<h3><%=link_to "Register your application",:action=>:new%></h3>
+	<% @client_applications.each do |client| %>
+		<p><%= link_to client.name, oauth_client_path(client.id) %></p>
+	<% end %>
+<% end %>
+<h3><%= link_to "Register your application", :action=> :new %></h3>

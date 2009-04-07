@@ -1,6 +1,27 @@
+<%= link_to oauth_clients_path %>
 <h1>Register a new application</h1>
 <% form_for :client_application, :url => { :action => :create } do |f| %>
-		<%= f.error_messages %>
-       <%= render :partial => "form", :locals => { :f => f } %>
-       <%= submit_tag "Register" %>
+	<%= f.error_messages %>
+	
+	<p>
+	<%= f.label :name, 'Name*' %>
+	<%= f.text_field :name %>
+	</p>
+	
+	<p>
+	<%= f.label :url, 'Main Application URL*' %>
+	<%= f.text_field :url %>
+	</p>
+
+	<p>
+	<%= f.label :callback_url, 'Callback URL*' %>
+	<%= f.text_field :callback_url %>
+	</p>
+	
+	<p>
+	<%= f.label :support_url, 'Support URL' %>
+	<%= f.text_field :support_url %>
+	</p>
+	
+	<%= f.submit "Register" %>
 <% end %>
