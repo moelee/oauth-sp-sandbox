@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
   def new
     if logged_in?
       flash[:notice] = 'Already logged in'
-      redirect_back_or_default('/')
+      redirect_to user_path(current_user)
     end
   end
 
