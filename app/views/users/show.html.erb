@@ -1,6 +1,4 @@
-<% if flash[:notice] %>
 <strong><%= flash[:notice] %></strong><br>
-<% end %>
 
 <% if logged_in? %>
 <%= link_to 'Logout', logout_path %>
@@ -10,4 +8,7 @@
 <br>
 <p><%= 'Welcome to the Service Provider sample app!' %></p>
 <p><%= "Your username is #{@user.login}"%></p>
-<p><%= link_to 'Your Photos', user_photos_path(@user) %>
+
+<p><%= link_to 'Your Photos', user_photos_path(@user) %></p>
+
+<p><%= link_to 'Third-Party Application Access List', oauth_tokens_path %></p>
