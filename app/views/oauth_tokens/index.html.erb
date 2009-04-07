@@ -1,0 +1,21 @@
+<div class="flash"><%=flash[:notice]%></div>
+<h1>Current Applications That Have Access To Your Resources</h1>
+<%unless @tokens.empty?%>
+<p>The following tokens have been issued to applications in your name</p>
+<table>
+	<tr><th>Application</th><th>Issued</th><th>&nbsp;</th></tr>
+	<% for token in @tokens %>
+		<%content_tag_for :tr,token do%>
+			<td><%=link_to token.client_application.name,token.client_application.url%></td>
+			<td><%=token.authorized_at%></td>
+			<td>
+				<%form_tag :controller=>'oauth',:action=>'revoke' do%>
+				<%=hidden_field_tag 'token',token.token%>
+				<%=submit_tag "Revoke!"%>
+				<%end%>
+			</td>
+		<%end%>
+	<%end%>
+	
+</table>
+<%end%>
