@@ -13,7 +13,7 @@ class OauthClientsController < ApplicationController
     @client_application=current_user.client_applications.build(params[:client_application])
     if @client_application.save
       flash[:notice]="Registered the information successfully"
-      redirect_to @client_application
+      redirect_to oauth_client_path(@client_application)
     else
       render :action=>"new"
     end
