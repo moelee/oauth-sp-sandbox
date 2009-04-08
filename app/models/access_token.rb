@@ -1,6 +1,16 @@
 class AccessToken<OauthToken
   validates_presence_of :user
-  before_create :set_authorized_at
+  before_create :set_authorized_at, :set_expires_on
+  
+  def to_query
+    resource_names = ""
+    resource_urls = ""
+    self.client_application.resources.each do |r|
+      resource_names += "&resources[]=" + r.name
+      resource_urls += "&resource_urls[]=" + r.child_sp.base_url
+    end
+    "oauth_token=#{token}&oauth_token_secret=#{secret}#{resource_names}#{resource_urls}&expires_on=#{expires_on.to_i}"
+  end
   
   protected 
   
