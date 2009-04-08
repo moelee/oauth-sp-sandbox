@@ -63,13 +63,21 @@ module OAuth
     # exchange for AccessToken on server
     def get_access_token(options={})
       response=consumer.token_request(consumer.http_method,consumer.access_token_url,self,options)
-      OAuth::AccessToken.new(consumer,response[:oauth_token],response[:oauth_token_secret],response["resource_names[]"],response["resource_urls[]"],response[:expires_on])
+      resource_scope = Hash[*(response["resource_names[]"].zip(response["resource_urls[]"]).flatten)]
+      OAuth::AccessToken.new(consumer,response[:oauth_token],response[:oauth_token_secret],resource_scope,response[:expires_on])
     end
   end
   
   # The Access Token is used for the actual "real" web service calls thatyou perform against the server
   class AccessToken<ConsumerToken
-
+    attr_accessor :expires_on, :resource_scope
+    # Need to initialize instance variables for resource scopes and expires_on
+    def initialize(consumer,token="",secret="", resource_scope = {}, expires_on="")
+      super
+      @expires_on = expires_on
+      @resource_scope = resource_scope
+    end
+    
     # The less intrusive way. Otherwise, if we are to do it correctly inside consumer,
     # we need to restructure and touch more methods: request(), sign!(), etc.
     def request(http_method, path, *arguments)
