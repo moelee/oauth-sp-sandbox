@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090407234934) do
+ActiveRecord::Schema.define(:version => 20090408020513) do
 
   create_table "child_sps", :force => true do |t|
     t.string   "base_url"
@@ -71,8 +71,10 @@ ActiveRecord::Schema.define(:version => 20090407234934) do
   end
 
   create_table "resource_scopes", :force => true do |t|
-    t.integer "client_application_id"
-    t.integer "resource_id"
+    t.integer  "client_application_id"
+    t.integer  "resource_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "resources", :force => true do |t|
