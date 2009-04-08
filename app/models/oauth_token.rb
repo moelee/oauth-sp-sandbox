@@ -9,12 +9,16 @@ class OauthToken < ActiveRecord::Base
     invalidated_at!=nil
   end
   
+  def expired?
+    expires_on < Time.now
+  end
+  
   def invalidate!
     update_attribute(:invalidated_at,Time.now)
   end
   
   def authorized?
-    authorized_at!=nil && !invalidated?
+    authorized_at!=nil && !invalidated? && !expired?
   end
   
   def to_query
