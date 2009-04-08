@@ -1,7 +1,8 @@
 require File.dirname(__FILE__) + '/../spec_helper'
+require 'cgi'
 
 describe RequestToken do
-  fixtures :client_applications,:users,:oauth_tokens
+  fixtures :client_applications,:users,:oauth_tokens, :resources, :resource_scopes, :child_sps
   before(:each) do
     @token = RequestToken.create :client_application=>client_applications(:one)
   end
@@ -50,6 +51,15 @@ describe RequestToken do
     
     @access.user.should==users(:quentin)
     @access.should be_authorized
+  end
+  
+  it "should generate a valid form-encoded url for the access token" do
+    @token.authorize!(users(:quentin))
+    @access=@token.exchange!
+    generated_query_body = CGI.parse(@access.to_query)
+    generated_query_body['resources[]'].should == ['photos', 'address_books']
+    generated_query_body['resource_urls[]'].should == ['http://photos.heroku.com', 'http://addressbooks.heroku.com']
+    generated_query_body['expires_on'].first.to_i.should be > Time.now.to_i + 60*60*24*7-20
   end
   
 end
