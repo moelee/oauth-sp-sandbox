@@ -63,7 +63,7 @@ module OAuth
     # exchange for AccessToken on server
     def get_access_token(options={})
       response=consumer.token_request(consumer.http_method,consumer.access_token_url,self,options)
-      OAuth::AccessToken.new(consumer,response[:oauth_token],response[:oauth_token_secret])
+      OAuth::AccessToken.new(consumer,response[:oauth_token],response[:oauth_token_secret],response["resource_names[]"],response["resource_urls[]"],response[:expires_on])
     end
   end
   
