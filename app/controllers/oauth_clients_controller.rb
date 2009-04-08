@@ -7,6 +7,7 @@ class OauthClientsController < ApplicationController
 
   def new
     @client_application=ClientApplication.new
+    @resources = Resource.find(:all)
   end
 
   def create

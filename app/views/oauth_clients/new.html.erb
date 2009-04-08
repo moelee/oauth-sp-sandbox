@@ -1,4 +1,5 @@
-<%= link_to oauth_clients_path %>
+<%= link_to 'Back to OAuth Clients Index', oauth_clients_path %>
+
 <h1>Register a new application</h1>
 <% form_for :client_application, :url => { :action => :create } do |f| %>
 	<%= f.error_messages %>
@@ -27,6 +28,14 @@
 	<%= f.label :support_url, 'Support URL' %>
 	<%= f.text_field :support_url %>
 	</p>
+	
+	<h2>Which resources would you like to have access to?</h2>
+	<% for resource in @resources %>
+	<p>
+	<%= resource.name.humanize %> 
+	<%= check_box_tag 'client_application[resource_ids][]', resource.id %>
+	</p>
+	<% end %>
 	
 	<%= f.submit "Register" %>
 <% end %>

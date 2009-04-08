@@ -2,11 +2,14 @@ require 'oauth'
 class ClientApplication < ActiveRecord::Base
   belongs_to :user
   has_many :tokens,:class_name=>"OauthToken"
-  has_many :resource_scopes
-  has_many :resources, :through => :resource_scopes, :dependent => :destroy
+  has_many :resource_scopes, :dependent => :destroy
+  has_many :resources, :through => :resource_scopes
   validates_presence_of :name,:url,:key,:secret
   validates_uniqueness_of :key
   before_validation_on_create :generate_keys
+  after_validation_on_create :associate_resources
+  
+  attr_accessor :resource_ids
   
   def self.find_token(token_key)
     token=OauthToken.find_by_token(token_key.token, :include => :client_application)
@@ -49,5 +52,11 @@ class ClientApplication < ActiveRecord::Base
     @oauth_client=oauth_server.generate_consumer_credentials
     self.key=@oauth_client.key
     self.secret=@oauth_client.secret
+  end
+  
+  def associate_resources
+    resource_ids.each do |resource_id|
+      self.resources << Resource.find(resource_id.to_i)
+    end
   end
 end
