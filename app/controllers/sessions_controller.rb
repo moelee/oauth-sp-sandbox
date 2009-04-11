@@ -5,12 +5,68 @@ class SessionsController < ApplicationController
 
   # render new.rhtml
   def new
-    if logged_in?
-      flash[:notice] = 'Already logged in'
-      redirect_to user_path(current_user)
+  end
+
+  def create
+    if using_open_id?
+      open_id_authentication(params[:openid_url])
+    else
+      password_authentication(params[:name], params[:password])
     end
   end
 
+
+protected
+  def password_authentication(name, password)
+    logout_keeping_session!
+    user = User.authenticate(params[:login], params[:password])
+    if user
+      # Protects against session fixation attacks, causes request forgery
+      # protection if user resubmits an earlier form using back
+      # button. Uncomment if you understand the tradeoffs.
+      # reset_session
+      self.current_user = user
+      new_cookie_flag = (params[:remember_me] == "1")
+      handle_remember_cookie! new_cookie_flag
+      successful_login
+      flash[:notice] = "Logged in successfully"
+    else
+      note_failed_signin
+      @login       = params[:login]
+      @remember_me = params[:remember_me]
+      render :action => 'new'
+    end
+  end
+
+  def open_id_authentication(openid_url)
+    authenticate_with_open_id(openid_url, :required => [:nickname, :email]) do |result, identity_url, registration|
+      if result.successful?
+        @user = User.find_or_initialize_by_identity_url(identity_url)
+        if @user.new_record?
+          @user.login = registration['nickname']
+          @user.email = registration['email']
+          @user.save(false)
+        end
+        self.current_user = @user
+        successful_login
+      else
+        failed_login result.message
+      end
+    end
+  end
+
+
+private
+  def successful_login
+    session[:user_id] = @current_user.id
+    redirect_to user_path(current_user)
+  end
+
+  def failed_login(message)
+    flash[:error] = message
+    redirect_to(new_session_url)
+  end
+=begin    
   def create
     logout_keeping_session!
     user = User.authenticate(params[:login], params[:password])
@@ -22,9 +78,8 @@ class SessionsController < ApplicationController
       self.current_user = user
       new_cookie_flag = (params[:remember_me] == "1")
       handle_remember_cookie! new_cookie_flag
+      redirect_back_or_default('/')
       flash[:notice] = "Logged in successfully"
-      #redirect_back_or_default('/')
-      redirect_to user_path(self.current_user)
     else
       note_failed_signin
       @login       = params[:login]
@@ -32,12 +87,11 @@ class SessionsController < ApplicationController
       render :action => 'new'
     end
   end
-
+=end
   def destroy
     logout_killing_session!
     flash[:notice] = "You have been logged out."
-    #redirect_back_or_default('/')
-    redirect_to login_path
+    redirect_back_or_default('/')
   end
 
 protected

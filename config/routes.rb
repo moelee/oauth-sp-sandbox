@@ -8,6 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :photos
   
   map.resource :session
+  map.open_id_complete 'session', :controller => 'session', :action => 'create', :requirements => {:method => :get}
   
   # OAuth routes
   map.resources :oauth_clients

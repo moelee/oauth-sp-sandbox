@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090408020513) do
+ActiveRecord::Schema.define(:version => 20090411180038) do
 
   create_table "child_sps", :force => true do |t|
     t.string   "base_url"
@@ -57,6 +57,21 @@ ActiveRecord::Schema.define(:version => 20090408020513) do
 
   add_index "oauth_tokens", ["token"], :name => "index_oauth_tokens_on_token", :unique => true
 
+  create_table "open_id_authentication_associations", :force => true do |t|
+    t.integer "issued"
+    t.integer "lifetime"
+    t.string  "handle"
+    t.string  "assoc_type"
+    t.binary  "server_url"
+    t.binary  "secret"
+  end
+
+  create_table "open_id_authentication_nonces", :force => true do |t|
+    t.integer "timestamp",  :null => false
+    t.string  "server_url"
+    t.string  "salt",       :null => false
+  end
+
   create_table "photos", :force => true do |t|
     t.integer  "parent_id"
     t.string   "content_type"
@@ -94,6 +109,7 @@ ActiveRecord::Schema.define(:version => 20090408020513) do
     t.datetime "updated_at"
     t.string   "remember_token",            :limit => 40
     t.datetime "remember_token_expires_at"
+    t.string   "identity_url"
   end
 
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
