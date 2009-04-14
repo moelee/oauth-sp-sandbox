@@ -4,9 +4,5 @@ class Photo < ActiveRecord::Base
                  :max_size => 10.megabytes
   
   validates_as_attachment
-  
-  # Constants
-  DEFAULT_RETURN_METHODS = [:public_filename]
-  
           
 end

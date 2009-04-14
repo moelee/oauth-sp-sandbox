@@ -5,7 +5,7 @@ class PhotosController < ApplicationController
 protected
 
   def find_user
-    if @current_token
+    if @current_token # This should be set of an oauth request
       @user = @current_user
     else
       @user = User.find(params[:user_id]) if params[:user_id]
@@ -21,7 +21,7 @@ public
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @photos.to_xml(:methods => Photo::DEFAULT_RETURN_METHODS) }
+      format.xml  { render :xml => @photos.to_xml }
     end
   end
 
