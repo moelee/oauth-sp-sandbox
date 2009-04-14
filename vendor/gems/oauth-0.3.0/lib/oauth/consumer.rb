@@ -118,7 +118,7 @@ module OAuth
     def token_request(http_method,path,token=nil,request_options={},*arguments)
       response=request(http_method,path,token,request_options,*arguments)
       if response.code=="200"
-        CGI.parse(response.body).inject({}){|h,(k,v)| h[k.to_sym]=v.first;h}
+        CGI.parse(response.body).inject({}){|h,(k,v)| h[k.to_sym]=v.join('&');h}
       else 
         response.error! 
       end
