@@ -59,4 +59,15 @@ class OauthController < ApplicationController
     redirect_to oauth_clients_url
   end
   
+  # This action is called by the ChildSP to verify their token against the session expiration date and scope
+  # User's identity_url and OK sent back to ChildSP
+  def verify_access_token
+    @token = AccessToken.find_by_token params[:token]
+    if @token.authorized?
+      render :text => "identity_url=#{@token.user.identity_url}"
+    else
+      render :nothing => true, :status => 401
+    end
+  end
+  
 end

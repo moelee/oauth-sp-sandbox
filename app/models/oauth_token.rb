@@ -9,8 +9,8 @@ class OauthToken < ActiveRecord::Base
     invalidated_at!=nil
   end
   
-  def expired?
-    expires_on < Time.now
+  def within_resource_scope?
+    
   end
   
   def invalidate!
@@ -18,7 +18,7 @@ class OauthToken < ActiveRecord::Base
   end
   
   def authorized?
-    authorized_at!=nil && !invalidated? && !expired?
+    authorized_at!=nil && !invalidated?
   end
   
   def to_query

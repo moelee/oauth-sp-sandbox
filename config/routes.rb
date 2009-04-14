@@ -17,7 +17,8 @@ ActionController::Routing::Routes.draw do |map|
   map.request_token '/oauth/request_token',:controller=>'oauth',:action=>'request_token'
   map.access_token '/oauth/access_token',:controller=>'oauth',:action=>'access_token'
   map.test_request '/oauth/test_request',:controller=>'oauth',:action=>'test_request'
-
+  map.verify_access_token '/oauth/verify_access_token',:controller=>'oauth',:action=>'verify_access_token'
+  
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
