@@ -5,7 +5,11 @@ class PhotosController < ApplicationController
 protected
 
   def find_user
-    @user = User.find(params[:user_id]) if params[:user_id]
+    if @current_token
+      @user = @current_user
+    else
+      @user = User.find(params[:user_id]) if params[:user_id]
+    end
   end
   
 public
@@ -24,7 +28,7 @@ public
   # GET /photos/1
   # GET /photos/1.xml
   def show
-    @photo = Photo.find(params[:id])
+    @photo = @user.photos.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -35,7 +39,7 @@ public
   # GET /photos/new
   # GET /photos/new.xml
   def new
-    @photo = Photo.new
+    @photo = @user.photos.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -45,13 +49,13 @@ public
 
   # GET /photos/1/edit
   def edit
-    @photo = Photo.find(params[:id])
+    @photo = @user.photos.find(params[:id])
   end
 
   # POST /photos
   # POST /photos.xml
   def create
-    @photo = Photo.new(params[:photo])
+    @photo = @user.photos.new(params[:photo])
 
     respond_to do |format|
       if @photo.save
@@ -68,12 +72,12 @@ public
   # PUT /photos/1
   # PUT /photos/1.xml
   def update
-    @photo = Photo.find(params[:id])
+    @photo = @user.photos.find(params[:id])
 
     respond_to do |format|
       if @photo.update_attributes(params[:photo])
         flash[:notice] = 'Photo was successfully updated.'
-        format.html { redirect_to(@photo) }
+        format.html { redirect_to(user_photo_path(@user, @photo)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -85,7 +89,7 @@ public
   # DELETE /photos/1
   # DELETE /photos/1.xml
   def destroy
-    @photo = Photo.find(params[:id])
+    @photo = @user.photos.find(params[:id])
     @photo.destroy
 
     respond_to do |format|

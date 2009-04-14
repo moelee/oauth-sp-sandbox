@@ -9,10 +9,6 @@ class OauthToken < ActiveRecord::Base
     invalidated_at!=nil
   end
   
-  def within_resource_scope?
-    
-  end
-  
   def invalidate!
     update_attribute(:invalidated_at,Time.now)
   end
