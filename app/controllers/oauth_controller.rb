@@ -1,5 +1,5 @@
 class OauthController < ApplicationController
-  before_filter :login_required,:except=>[:request_token,:access_token,:test_request]
+  before_filter :login_required,:except=>[:request_token,:access_token,:test_request,:verify_access_token]
   before_filter :login_or_oauth_required,:only=>[:test_request]
   before_filter :verify_oauth_consumer_signature, :only=>[:request_token]
   before_filter :verify_oauth_request_token, :only=>[:access_token]
@@ -62,8 +62,8 @@ class OauthController < ApplicationController
   # This action is called by the ChildSP to verify their token against the session expiration date and scope
   # User's identity_url and OK sent back to ChildSP
   def verify_access_token
-    @token = AccessToken.find_by_token params[:access_token][:token]
-    if @token.authorized?
+    @access_token = AccessToken.find_by_token params[:token]
+    if @access_token.authorized?
       render :text => "identity_url=#{@token.user.identity_url}"
     else
       render :nothing => true, :status => 401
