@@ -63,7 +63,12 @@ protected
 private
   def successful_login
     session[:user_id] = @current_user.id
-    redirect_to user_path(current_user)
+    if session[:oauth_token]
+      redirect_to authorize_path(:oauth_token => session[:oauth_token])
+      session[:oauth_token] = nil
+    else
+      redirect_to user_path(current_user)
+    end
   end
 
   def failed_login(message)

@@ -1,5 +1,5 @@
 class OauthController < ApplicationController
-  before_filter :login_required,:except=>[:request_token,:access_token,:test_request,:verify_access_token]
+  before_filter :login_required,:except=>[:request_token,:access_token,:test_request,:verify_access_token, :authorize]
   before_filter :login_or_oauth_required,:only=>[:test_request]
   before_filter :verify_oauth_consumer_signature, :only=>[:request_token]
   before_filter :verify_oauth_request_token, :only=>[:access_token]
@@ -29,6 +29,11 @@ class OauthController < ApplicationController
   end
   
   def authorize
+    unless logged_in?
+      session[:oauth_token] = params[:oauth_token]
+      redirect_to login_path
+      return
+    end
     @token=RequestToken.find_by_token params[:oauth_token]
     unless @token.invalidated?    
       if request.post? 
