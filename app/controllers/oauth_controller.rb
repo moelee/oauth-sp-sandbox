@@ -69,7 +69,7 @@ class OauthController < ApplicationController
   def verify_access_token
     @access_token = AccessToken.find_by_token params[:token]
     if @access_token.authorized?
-      render :text => "identity_url=#{@token.user.identity_url}"
+      render :text => "identity_url=#{@access_token.user.identity_url}"
     else
       render :nothing => true, :status => 401
     end
