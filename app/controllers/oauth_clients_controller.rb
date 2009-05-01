@@ -33,7 +33,7 @@ class OauthClientsController < ApplicationController
     @client_application=current_user.client_applications.find(params[:id])
     if @client_application.update_attributes(params[:client_application])
       flash[:notice]="Updated the client information successfully"
-      redirect_to :action=>"show",:id=>@client_application.id
+      redirect_to edit_oauth_client_path(@client_application)
     else
       render :action=>"edit"
     end
