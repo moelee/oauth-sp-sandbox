@@ -8,7 +8,7 @@ protected
     if @current_token # This should be set of an oauth request
       @user = @current_user
     else
-      @user = User.find(params[:user_id]) if params[:user_id]
+      @user = current_user
     end
   end
   
