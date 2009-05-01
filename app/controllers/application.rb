@@ -5,10 +5,14 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   include AuthenticatedSystem
   include SslRequirement
+  ssl_required
+  
+  def ssl_required?
+    Rails.env.production?
+  end
+  
   # Ignore authenticity token checks for now
   skip_before_filter :verify_authenticity_token
-  
-  before_filter :ssl_required if Rails.env.production?
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
