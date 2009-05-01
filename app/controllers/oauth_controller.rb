@@ -61,7 +61,7 @@ class OauthController < ApplicationController
       @token.invalidate!
       flash[:notice]="You've revoked the token for #{@token.client_application.name}"
     end
-    redirect_to oauth_clients_url
+    redirect_to oauth_tokens_path
   end
   
   # This action is called by the ChildSP to verify their token against the session expiration date and scope

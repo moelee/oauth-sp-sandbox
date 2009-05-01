@@ -1,7 +1,10 @@
-<div class="flash"><%=flash[:notice]%></div>
+<%= link_to 'Back to Dashboard', dashboard_path %>
 <h1>Current Applications That Have Access To Your Resources</h1>
+
 <%unless @tokens.empty?%>
+
 <p>The following tokens have been issued to applications in your name</p>
+
 <table>
 	<tr><th>Application</th><th>Issued</th><th>&nbsp;</th></tr>
 	<% for token in @tokens %>
@@ -18,4 +21,6 @@
 	<%end%>
 	
 </table>
+<% else %>
+No tokens assigned.
 <%end%>

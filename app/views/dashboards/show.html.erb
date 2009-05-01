@@ -1,0 +1,9 @@
+<%= link_to 'Logout', logout_path %>
+<p><%= 'Welcome to the Service Provider sample app!' %></p>
+<p><%= "Your username is #{current_user.login}"%></p>
+
+<p><%= link_to 'Your Photos', user_photos_path(current_user) %></p>
+
+<p><%= link_to 'See which Third-Party Apps have access to your resources', oauth_tokens_path %></p>
+
+<p><%= link_to 'See which Third-Party Apps you have registered', oauth_clients_path %></p>

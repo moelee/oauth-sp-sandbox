@@ -21,8 +21,8 @@ public
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @photos.to_xml }
-      format.json  { render :xml => @photos.to_json }
+      format.xml  { render :xml => @photos.to_xml(:methods => :public_filename) }
+      format.json  { render :json => @photos.to_json(:methods => :public_filename) }
     end
   end
 
@@ -33,8 +33,8 @@ public
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @photo }
-      format.json  { render :xml => @photo }
+      format.xml  { render :xml => @photo.to_xml(:methods => :public_filename) }
+      format.json  { render :json => @photo.to_json(:methods => :public_filename) }
     end
   end
 
@@ -45,8 +45,8 @@ public
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @photo }
-      format.json  { render :json => @photo }
+      format.xml  { render :xml => @photo.to_xml(:methods => :public_filename) }
+      format.json  { render :json => @photo.to_json(:methods => :public_filename) }
     end
   end
 
@@ -64,12 +64,12 @@ public
       if @photo.save
         flash[:notice] = 'Photo was successfully created.'
         format.html { redirect_to(@photo) }
-        format.xml  { render :xml => @photo, :status => :created, :location => @photo }
-        format.json  { render :json => @photo, :status => :created, :location => @photo }
+        format.xml  { render :xml => @photo.to_xml(:methods => :public_filename), :status => :created, :location => @photo }
+        format.json  { render :json => @photo.to_json(:methods => :public_filename), :status => :created, :location => @photo }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @photo.errors, :status => :unprocessable_entity }
-        format.json  { render :json => @photo, :status => :created, :location => @photo }
+        format.json  { render :json => @photo.errors, :status => :created, :location => @photo }
       end
     end
   end
