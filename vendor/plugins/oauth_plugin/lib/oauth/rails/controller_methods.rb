@@ -102,7 +102,7 @@ module OAuth
             # return the token secret and the consumer secret
             [(current_token.nil? ? nil : current_token.secret), (current_client_application.nil? ? nil : current_client_application.secret)]
           end
-          within_scope = %w[oauth oauth_tokens].include?(params[:controller]) ? self.current_token.within_resource_scope?(params[:controller]) : nil
+          self.current_token.class == AccessToken ? self.current_token.within_resource_scope?(params[:controller]) : nil
           valid && within_scope
 #        rescue
 #          valid=false
