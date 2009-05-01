@@ -63,7 +63,7 @@ public
     respond_to do |format|
       if @photo.save
         flash[:notice] = 'Photo was successfully created.'
-        format.html { redirect_to(@photo) }
+        format.html { redirect_to(user_photo_path(@user, @photo)) }
         format.xml  { render :xml => @photo.to_xml(:methods => :public_filename), :status => :created, :location => @photo }
         format.json  { render :json => @photo.to_json(:methods => :public_filename), :status => :created, :location => @photo }
       else
