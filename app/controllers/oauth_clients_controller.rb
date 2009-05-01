@@ -26,6 +26,7 @@ class OauthClientsController < ApplicationController
 
   def edit
     @client_application=current_user.client_applications.find(params[:id])
+    @resources = Resource.find(:all)
   end
   
   def update

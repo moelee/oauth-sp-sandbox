@@ -7,8 +7,6 @@
 	<b>Consumer Secret:</b> <%=@client_application.secret%>
 </p>
 <p>
-	<b>Public Key:</b> <%=@client_application.public_key%>
-<p>
 	<b>Request Token URL</b> http<%='s' if request.ssl?%>://<%=request.host_with_port%><%=@client_application.oauth_server.request_token_path%>
 </p>
 <p>
@@ -18,6 +16,10 @@
 	<b>Authorize URL</b> http<%='s' if request.ssl?%>://<%=request.host_with_port%><%=@client_application.oauth_server.authorize_path%>
 </p>
 
-<p>
-	We support hmac-sha1 (recommended) as well as plain text in ssl mode.
-</p>
+<h4>Requested Resources</h4>
+<ul>
+	<% for resource in @client_application.resources %>
+		<li><%= resource.name.humanize %></li>
+	<% end %>
+</ul>
+<%= link_to 'Edit', edit_oauth_client_path(@client_application) %>

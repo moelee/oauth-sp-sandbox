@@ -8,6 +8,7 @@ class ClientApplication < ActiveRecord::Base
   validates_uniqueness_of :key
   before_validation_on_create :generate_keys
   after_validation_on_create :associate_resources
+  after_validation_on_update :associate_resources
   
   attr_accessor :resource_ids
   
@@ -55,6 +56,10 @@ class ClientApplication < ActiveRecord::Base
   end
   
   def associate_resources
+    # Destroy previous association
+    self.resource_scopes.each {|resource_scope| resource_scope.destroy }
+    
+    # Create associations
     resource_ids.each do |resource_id|
       self.resources << Resource.find(resource_id.to_i)
     end
