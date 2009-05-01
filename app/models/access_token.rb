@@ -12,16 +12,16 @@ class AccessToken<OauthToken
     "oauth_token=#{token}&oauth_token_secret=#{secret}#{resource_names}#{resource_urls}&expires_on=#{expires_on.to_i}"
   end
   
-  def within_resource_scope?(resource)
-    @token.resources.collect {|resource| resource.name}.include?(params[:resource])
+  def within_resource_scope?(requested_resource)
+    client_application.resources.collect {|resource| resource.name}.include?(requested_resource)
   end
   
   def expired?
     expires_on < Time.now
   end
   
-  def authorized?
-    authorized_at!=nil && !invalidated? && !expired?
+  def authorized?(resource)
+    authorized_at!=nil && !invalidated? && !expired? && within_resource_scope?(resource)
   end  
   
   protected 
