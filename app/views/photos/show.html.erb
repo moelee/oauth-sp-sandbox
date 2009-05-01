@@ -1,5 +1,7 @@
-<p>
-	<%= link_to 'Link to Photo', @photo.public_filename %>
+<%= link_to 'Back to Photos', user_photos_path(@user) %>
+
+<img src="<%=@photo.public_filename%>">
+
 <p>
   <b>Parent:</b>
   <%=h @photo.parent_id %>
@@ -36,5 +38,4 @@
 </p>
 
 
-<%= link_to 'Edit', edit_user_photo_path(@user, @photo) %> |
-<%= link_to 'Back', user_photos_path(@user) %>
+<%= link_to 'Edit', edit_user_photo_path(@user, @photo) %>

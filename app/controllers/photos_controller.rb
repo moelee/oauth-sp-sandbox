@@ -100,7 +100,8 @@ public
     @photo.destroy
 
     respond_to do |format|
-      format.html { redirect_to(photos_url) }
+      flash[:notice] = 'Photo deleted'
+      format.html { redirect_to(user_photos_url(@user)) }
       format.xml  { head :ok }
       format.json  { head :ok }
     end
