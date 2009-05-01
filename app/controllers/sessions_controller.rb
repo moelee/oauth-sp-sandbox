@@ -64,7 +64,7 @@ private
       redirect_to authorize_path(:oauth_token => session[:oauth_token])
       session[:oauth_token] = nil
     else
-      redirect_to user_path(current_user)
+      redirect_to dashboard_path
     end
   end
 

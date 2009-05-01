@@ -20,8 +20,8 @@ class AccessToken<OauthToken
     expires_on < Time.now
   end
   
-  def authorized?(resource)
-    authorized_at!=nil && !invalidated? && !expired? && within_resource_scope?(resource)
+  def authorized?
+    authorized_at!=nil && !invalidated? && !expired?
   end  
   
   protected 

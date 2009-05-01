@@ -46,7 +46,7 @@ module OAuth
       # This requies that you have an acts_as_authenticated compatible authentication plugin installed
       def login_or_oauth_required
         if oauthenticate
-          if authorized?
+          if authorized? and current_token.within_resource_scope?(params[:controller])
             return true
           else
             invalid_oauth_response
@@ -102,12 +102,7 @@ module OAuth
             # return the token secret and the consumer secret
             [(current_token.nil? ? nil : current_token.secret), (current_client_application.nil? ? nil : current_client_application.secret)]
           end
-          if self.current_token.class == AccessToken
-            within_scope = self.current_token.within_resource_scope?(params[:controller])
-          else
-            within_scope = true
-          end
-          valid && within_scope
+          valid
 #        rescue
 #          valid=false
         end

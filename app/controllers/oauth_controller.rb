@@ -68,7 +68,7 @@ class OauthController < ApplicationController
   # User's identity_url and OK sent back to ChildSP
   def verify_access_token
     @access_token = AccessToken.find_by_token params[:token]
-    if @access_token.authorized?(params[:resource])
+    if @access_token.authorized? and @access_token.within_resource_scope?(params[:resource])
       render :text => "identity_url=#{@access_token.user.identity_url}"
     else
       render :nothing => true, :status => 401
